@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="F:\Freeman\FlurryApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\libs\internal_impl-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
+        <dex dex="F:\Freeman\FlurryApp\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-96b415d5f51cc43e670ae9081b3d02e0f3312905.jar" />
+    </item>
+    <item
+        jar="F:\Freeman\FlurryApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3">
+        <dex dex="F:\Freeman\FlurryApp\app\build\intermediates\pre-dexed\debug\classes-832a07cfbfafc122e28999d15f1500771e4a59b4.jar" />
+    </item>
+    <item
+        jar="F:\Freeman\FlurryApp\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="7ae2d38807a43b2f2185ff4089a92c790b579e54">
+        <dex dex="F:\Freeman\FlurryApp\app\build\intermediates\pre-dexed\debug\classes-a7b6ff3773bccb970688e41fcd332918af20b37e.jar" />
+    </item>
+    <item
+        jar="D:\Android\extras\android\m2repository\com\android\support\support-annotations\21.0.2\support-annotations-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6">
+        <dex dex="F:\Freeman\FlurryApp\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-90db3317687e1f4df125eb8bf1db13a31f343b6b.jar" />
+    </item>
+
+</items>
