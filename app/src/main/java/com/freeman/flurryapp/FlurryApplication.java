@@ -4,8 +4,10 @@ package com.freeman.flurryapp;
  * Created by alberthe on 2014/12/17.
  */
 public class FlurryApplication {
-    String name;
-    String apiKey;
-    String createdDate;
-    String platform;
+    public String name;
+    public String apiKey;
+    public String createdDate;
+    public String platform;
+
+    public boolean visible;
 }

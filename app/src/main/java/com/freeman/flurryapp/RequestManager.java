@@ -2,6 +2,8 @@ package com.freeman.flurryapp;
 
 import android.util.Log;
 
+import com.freeman.flurryapp.db.DbManager;
+
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -84,6 +86,7 @@ public class RequestManager {
                 URL url = new URL(String.format(REQUEST_ALL_APPLICATIONS,apiCode));
                 urlConnection = (HttpURLConnection) url.openConnection();
                 ArrayList<FlurryApplication> data = JsonManager.getManager().parseToFlurryApplication(urlConnection.getInputStream());
+                DbManager.getManager().updateAppList(data);
                 if(mAppCallback != null){
                     mAppCallback.handleRequestApplications(data);
                 }

@@ -17,14 +17,22 @@ public class AppListAdapter extends BaseAdapter {
 
     LayoutInflater mInflater;
     ArrayList<FlurryApplication> mData = new ArrayList<FlurryApplication>();
+    boolean showChecked = false;
 
-    public AppListAdapter(Context c){
+    public AppListAdapter(Context c, boolean s){
         mInflater = LayoutInflater.from(c);
+        showChecked = s;
     }
 
     public void setData(ArrayList<FlurryApplication> list){
         mData.clear();
         mData.addAll(list);
+
+        notifyDataSetChanged();
+    }
+
+    public void setItemVisible(int position,boolean visible){
+        mData.get(position).visible = visible;
 
         notifyDataSetChanged();
     }
@@ -51,6 +59,8 @@ public class AppListAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.item_app_list,parent,false);
             holder = new ViewHolder();
             holder.mNameText = (TextView) convertView.findViewById(R.id.tv_name);
+            holder.mPlatformText = (TextView) convertView.findViewById(R.id.tv_platform);
+            holder.mVisibleText = (TextView) convertView.findViewById(R.id.tv_visible);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -66,12 +76,26 @@ public class AppListAdapter extends BaseAdapter {
         });
 
         holder.mNameText.setText(mData.get(position).name);
+        holder.mPlatformText.setText(mData.get(position).platform);
+
+        if (showChecked) {
+            if (mData.get(position).visible) {
+                holder.mVisibleText.setText("show");
+            } else {
+                holder.mVisibleText.setText("hide");
+            }
+            holder.mVisibleText.setVisibility(View.VISIBLE);
+        }else{
+            holder.mVisibleText.setVisibility(View.GONE);
+        }
 
         return convertView;
     }
 
     private class ViewHolder{
         public TextView mNameText;
+        public TextView mPlatformText;
+        public TextView mVisibleText;
     }
 
     public interface ItemClickCallBack{
