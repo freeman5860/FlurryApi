@@ -37,7 +37,8 @@ public class RequestManager {
 
     private static final String REQUEST_URL = "http://api.flurry.com/appMetrics/%s?apiAccessCode=%s&apiKey=%s&startDate=%s&endDate=%s";
     private static final String REQUEST_ALL_APPLICATIONS = "http://api.flurry.com/appInfo/getAllApplications?apiAccessCode=%s";
-    private String apiKey = "HP7PSZ2VYZMX5V5K8MS7";
+    // config the key
+    private String apiKey = "";
 
     public void setApiKey(String key){
         apiKey = key;
