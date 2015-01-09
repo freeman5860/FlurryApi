@@ -8,3 +8,6 @@ Feature:
 - query new user, active user and sessions of the app during last 7 days
 
 Developed with Android Studio v1.0
+
+Flurry Wiki:
+http://support.flurry.com/index.php?title=API/GettingStarted
