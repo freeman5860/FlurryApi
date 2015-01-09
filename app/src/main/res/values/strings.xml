@@ -9,9 +9,13 @@
     <string name="title_section5">MedianSessionLength</string>
     <string name="title_section6">AvgSessionLength</string>
     <string name="title_section7">Sessions</string>
+    <string name="title_section8">Events</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
 
+    <string name="dlg_title">Input Api Code</string>
+    <string name="dlg_positive_btn">Confirm</string>
+    <string name="dlg_negative_btn">Cancel</string>
 </resources>

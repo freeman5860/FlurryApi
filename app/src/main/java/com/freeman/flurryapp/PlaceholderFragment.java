@@ -12,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.freeman.flurryapp.adapter.DayValueListAdapter;
+import com.freeman.flurryapp.entry.FlurryData;
+import com.freeman.flurryapp.manager.RequestManager;
+
 /**
  * A placeholder fragment containing a simple view.
  */

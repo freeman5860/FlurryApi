@@ -1,15 +1,24 @@
 package com.freeman.flurryapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListView;
 
+import com.freeman.flurryapp.adapter.AppListAdapter;
+import com.freeman.flurryapp.callback.RequestAppCallback;
 import com.freeman.flurryapp.db.DbManager;
 import com.freeman.flurryapp.db.DbObserver;
+import com.freeman.flurryapp.entry.FlurryApplication;
+import com.freeman.flurryapp.entry.RequestData;
+import com.freeman.flurryapp.manager.RequestManager;
+import com.freeman.flurryapp.manager.SettingManager;
+import com.freeman.flurryapp.manager.ThreadManager;
 
 import java.util.ArrayList;
 
@@ -32,6 +41,33 @@ public class AppListActivity extends ActionBarActivity implements AppListAdapter
         mAdapter.setItemClickCallBack(this);
         mList.setAdapter(mAdapter);
 
+        if(SettingManager.getBooleanSetting(this, SettingManager.PREF_FLURRY, SettingManager.KEY_FIRST_INIT, true)){
+            createInputDlg();
+        }else{
+            RequestData.API_ACCESS_CODE = SettingManager.getStringSetting(AppListActivity.this,SettingManager.PREF_FLURRY,SettingManager.KEY_API_CODE,"");
+        }
+    }
+
+    private void createInputDlg(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.dlg_title);
+        final EditText editText = new EditText(this);
+        builder.setView(editText);
+        builder.setPositiveButton(R.string.dlg_positive_btn,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String apiCode = editText.getText().toString();
+                RequestData.API_ACCESS_CODE = apiCode;
+                RequestManager.getManager().requestApplications(mAppRequestCallback,apiCode);
+            }
+        });
+        builder.setNegativeButton(R.string.dlg_negative_btn,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.create().show();
     }
 
     @Override
@@ -99,10 +135,13 @@ public class AppListActivity extends ActionBarActivity implements AppListAdapter
             if(isFinishing())
                 return;
 
-            runOnUiThread(new Runnable() {
+            SettingManager.setBooleanSetting(AppListActivity.this,SettingManager.PREF_FLURRY,SettingManager.KEY_FIRST_INIT,false);
+            SettingManager.setStringSetting(AppListActivity.this,SettingManager.PREF_FLURRY,SettingManager.KEY_API_CODE,RequestData.API_ACCESS_CODE);
+
+            ThreadManager.executeOnWorkerThread(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter.setData(data);
+                    DbManager.getManager().queryAppList(false);
                 }
             });
         }

@@ -29,6 +29,10 @@
         <activity android:name="com.freeman.flurryapp.AppSettingActivity"
             android:label="@string/app_name">
         </activity>
+
+        <activity android:name="com.freeman.flurryapp.FlurryEventActivity"
+            android:label="@string/app_name">
+        </activity>
     </application>
 
 </manifest>

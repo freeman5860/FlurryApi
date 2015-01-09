@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
 
+import com.freeman.flurryapp.adapter.AppListAdapter;
 import com.freeman.flurryapp.db.DbManager;
 import com.freeman.flurryapp.db.DbObserver;
+import com.freeman.flurryapp.entry.FlurryApplication;
+import com.freeman.flurryapp.manager.ThreadManager;
 
 import java.util.ArrayList;
 

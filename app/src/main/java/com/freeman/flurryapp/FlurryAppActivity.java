@@ -1,16 +1,15 @@
 package com.freeman.flurryapp;
 
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
-import java.util.Calendar;
+import com.freeman.flurryapp.manager.RequestManager;
 
 public class FlurryAppActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -51,14 +50,18 @@ public class FlurryAppActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(1418823270925L);
-        Log.e("hjy ", calendar.toString());
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+        if(position == 7){
+            Intent intent = new Intent(this,FlurryEventActivity.class);
+            intent.putExtra(FlurryEventActivity.ARG_API_KEY, apiKey);
+            intent.putExtra(FlurryEventActivity.ARG_APP_NAME, appName);
+            startActivity(intent);
+            return;
+        }
+
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()

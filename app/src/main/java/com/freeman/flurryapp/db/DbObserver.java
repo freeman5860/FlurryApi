@@ -1,6 +1,6 @@
 package com.freeman.flurryapp.db;
 
-import com.freeman.flurryapp.FlurryApplication;
+import com.freeman.flurryapp.entry.FlurryApplication;
 
 import java.util.ArrayList;
 
