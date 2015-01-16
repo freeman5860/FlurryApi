@@ -47,6 +47,7 @@ public class JsonManager {
         if(appObject instanceof  JSONObject){
             JSONObject obj = (JSONObject)appObject;
             EventSummary event = new EventSummary();
+            event.totalCount = obj.getString("@totalCount");
             event.eventName = obj.getString("@eventName");
             data.add(event);
         }else if(appObject instanceof  JSONArray){
@@ -54,6 +55,7 @@ public class JsonManager {
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject obj = jsonArray.getJSONObject(i);
                 EventSummary event = new EventSummary();
+                event.totalCount = obj.getString("@totalCount");
                 event.eventName = obj.getString("@eventName");
                 data.add(event);
             }

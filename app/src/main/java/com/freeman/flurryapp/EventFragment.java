@@ -14,8 +14,11 @@ import android.widget.ListView;
 
 import com.freeman.flurryapp.adapter.DayValueListAdapter;
 import com.freeman.flurryapp.adapter.EventParamListAdapter;
-import com.freeman.flurryapp.callback.RequestEventParamCallback;
+import com.freeman.flurryapp.callback.RequestCallBack;
 import com.freeman.flurryapp.entry.EventParam;
+import com.freeman.flurryapp.entry.EventSummary;
+import com.freeman.flurryapp.entry.FlurryApplication;
+import com.freeman.flurryapp.entry.FlurryData;
 import com.freeman.flurryapp.manager.RequestManager;
 
 import java.util.ArrayList;
@@ -73,7 +76,22 @@ public class EventFragment extends Fragment {
         RequestManager.getManager().setRequestCallBack(null);
     }
 
-    private RequestEventParamCallback mEventParamCallBack = new RequestEventParamCallback() {
+    private RequestCallBack mEventParamCallBack = new RequestCallBack() {
+        @Override
+        public void handleRequestData(FlurryData data) {
+
+        }
+
+        @Override
+        public void handleRequestApplications(ArrayList<FlurryApplication> data) {
+
+        }
+
+        @Override
+        public void handleEventSummary(ArrayList<EventSummary> summaryList) {
+
+        }
+
         @Override
         public void handleEventParam(final ArrayList<EventParam> paramList) {
             getActivity().runOnUiThread(new Runnable() {

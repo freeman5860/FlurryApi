@@ -11,10 +11,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.freeman.flurryapp.adapter.AppListAdapter;
-import com.freeman.flurryapp.callback.RequestAppCallback;
+import com.freeman.flurryapp.callback.RequestCallBack;
 import com.freeman.flurryapp.db.DbManager;
 import com.freeman.flurryapp.db.DbObserver;
+import com.freeman.flurryapp.entry.EventParam;
+import com.freeman.flurryapp.entry.EventSummary;
 import com.freeman.flurryapp.entry.FlurryApplication;
+import com.freeman.flurryapp.entry.FlurryData;
 import com.freeman.flurryapp.entry.RequestData;
 import com.freeman.flurryapp.manager.RequestManager;
 import com.freeman.flurryapp.manager.SettingManager;
@@ -129,7 +132,12 @@ public class AppListActivity extends ActionBarActivity implements AppListAdapter
         return super.onOptionsItemSelected(item);
     }
 
-    private RequestAppCallback mAppRequestCallback = new RequestAppCallback() {
+    private RequestCallBack mAppRequestCallback = new RequestCallBack() {
+        @Override
+        public void handleRequestData(FlurryData data) {
+
+        }
+
         @Override
         public void handleRequestApplications(final ArrayList<FlurryApplication> data) {
             if(isFinishing())
@@ -144,6 +152,16 @@ public class AppListActivity extends ActionBarActivity implements AppListAdapter
                     DbManager.getManager().queryAppList(false);
                 }
             });
+        }
+
+        @Override
+        public void handleEventSummary(ArrayList<EventSummary> summaryList) {
+
+        }
+
+        @Override
+        public void handleEventParam(ArrayList<EventParam> paramList) {
+
         }
     };
 

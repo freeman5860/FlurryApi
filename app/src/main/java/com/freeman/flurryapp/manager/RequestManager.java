@@ -2,9 +2,7 @@ package com.freeman.flurryapp.manager;
 
 import android.util.Log;
 
-import com.freeman.flurryapp.callback.RequestAppCallback;
-import com.freeman.flurryapp.callback.RequestEventCallback;
-import com.freeman.flurryapp.callback.RequestEventParamCallback;
+import com.freeman.flurryapp.callback.RequestCallBack;
 import com.freeman.flurryapp.db.DbManager;
 import com.freeman.flurryapp.entry.EventParam;
 import com.freeman.flurryapp.entry.EventSummary;
@@ -48,6 +46,12 @@ public class RequestManager {
     // config the key
     private String apiKey = "";
 
+    public RequestCallBack mCallBack = null;
+
+    public void setRequestCallBack(RequestCallBack c){
+        mCallBack = c;
+    }
+
     public void setApiKey(String key){
         apiKey = key;
     }
@@ -61,18 +65,18 @@ public class RequestManager {
         return url;
     }
 
-    public void requestApplications(RequestAppCallback c, String apiCode){
-        setRequestAppCallback(c);
+    public void requestApplications(RequestCallBack c, String apiCode){
+        setRequestCallBack(c);
         ThreadManager.executeOnWorkerThread(new RequestApplication(apiCode));
     }
 
-    public void requestEventSummary(RequestEventCallback c, String apiCode){
-        setRequestEventCallback(c);
+    public void requestEventSummary(RequestCallBack c, String apiCode){
+        setRequestCallBack(c);
         ThreadManager.executeOnWorkerThread(new RequestEventSummary(apiCode));
     }
 
-    public void requestEventParam(RequestEventParamCallback c, String eventName){
-        setRequestEventCallback(c);
+    public void requestEventParam(RequestCallBack c, String eventName){
+        setRequestCallBack(c);
         ThreadManager.executeOnWorkerThread(new RequestEventParam(eventName));
     }
 
@@ -111,8 +115,8 @@ public class RequestManager {
                 URL url = new URL(String.format(REQUEST_EVENT_DETAIL,RequestData.API_ACCESS_CODE,apiKey,startDate,endDate,eventName));
                 urlConnection = (HttpURLConnection) url.openConnection();
                 ArrayList<EventParam> data = JsonManager.getManager().parseToEventParams(urlConnection.getInputStream());
-                if(mEventParamCallback != null){
-                    mEventParamCallback.handleEventParam(data);
+                if(mCallBack != null){
+                    mCallBack.handleEventParam(data);
                 }
             }catch (MalformedURLException ex){
                 Log.e(TAG, ex.toString());
@@ -148,8 +152,8 @@ public class RequestManager {
                 URL url = new URL(String.format(REQUEST_EVENT_SUMMARY,apiCode,apiKey,startDate,endDate));
                 urlConnection = (HttpURLConnection) url.openConnection();
                 ArrayList<EventSummary> data = JsonManager.getManager().parseToEventSummary(urlConnection.getInputStream());
-                if(mEventCallback != null){
-                    mEventCallback.handleEventSummary(data);
+                if(mCallBack != null){
+                    mCallBack.handleEventSummary(data);
                 }
             }catch (MalformedURLException ex){
                 Log.e(TAG, ex.toString());
@@ -180,8 +184,8 @@ public class RequestManager {
                 urlConnection = (HttpURLConnection) url.openConnection();
                 ArrayList<FlurryApplication> data = JsonManager.getManager().parseToFlurryApplication(urlConnection.getInputStream());
                 DbManager.getManager().updateAppList(data);
-                if(mAppCallback != null){
-                    mAppCallback.handleRequestApplications(data);
+                if(mCallBack != null){
+                    mCallBack.handleRequestApplications(data);
                 }
             }catch (MalformedURLException ex){
                 Log.e(TAG, ex.toString());
@@ -227,27 +231,5 @@ public class RequestManager {
                 }
             }
         }
-    }
-
-    public interface RequestCallBack{
-        public void handleRequestData(FlurryData data);
-    }
-
-    private RequestCallBack mCallBack = null;
-    public void setRequestCallBack(RequestCallBack c){
-        mCallBack = c;
-    }
-
-    private RequestAppCallback mAppCallback = null;
-    public void setRequestAppCallback(RequestAppCallback c){mAppCallback = c;}
-
-    private RequestEventCallback mEventCallback = null;
-    public void setRequestEventCallback(RequestEventCallback c){
-        mEventCallback = c;
-    }
-
-    private RequestEventParamCallback mEventParamCallback = null;
-    public void setRequestEventCallback(RequestEventParamCallback c){
-        mEventParamCallback = c;
     }
 }

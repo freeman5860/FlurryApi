@@ -21,8 +21,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.freeman.flurryapp.callback.RequestEventCallback;
+import com.freeman.flurryapp.callback.RequestCallBack;
+import com.freeman.flurryapp.entry.EventParam;
 import com.freeman.flurryapp.entry.EventSummary;
+import com.freeman.flurryapp.entry.FlurryApplication;
+import com.freeman.flurryapp.entry.FlurryData;
 import com.freeman.flurryapp.entry.RequestData;
 import com.freeman.flurryapp.manager.RequestManager;
 
@@ -64,7 +67,8 @@ public class EventDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    private ArrayList<String> mEventList = new ArrayList<String>();
+    private ArrayList<String> mTitleList = new ArrayList<String>();
+    private ArrayList<EventSummary> mEventList = new ArrayList<>();
 
     public EventDrawerFragment() {
     }
@@ -110,7 +114,7 @@ public class EventDrawerFragment extends Fragment {
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                mEventList));
+                mTitleList));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -202,7 +206,7 @@ public class EventDrawerFragment extends Fragment {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(mEventList.get(position));
+            mCallbacks.onNavigationDrawerItemSelected(mEventList.get(position).eventName);
         }
     }
 
@@ -280,11 +284,24 @@ public class EventDrawerFragment extends Fragment {
         void onNavigationDrawerItemSelected(String eventName);
     }
 
-    private RequestEventCallback mEventCallBack = new RequestEventCallback() {
+    private RequestCallBack mEventCallBack = new RequestCallBack() {
+        @Override
+        public void handleRequestData(FlurryData data) {
+
+        }
+
+        @Override
+        public void handleRequestApplications(ArrayList<FlurryApplication> data) {
+
+        }
+
         @Override
         public void handleEventSummary(final ArrayList<EventSummary> summaryList) {
+            mEventList.clear();
+            mEventList.addAll(summaryList);
             for(EventSummary event : summaryList){
-                mEventList.add(event.eventName);
+                String title = event.eventName + ": " + event.totalCount;
+                mTitleList.add(title);
             }
 
             getActivity().runOnUiThread(new Runnable() {
@@ -295,9 +312,14 @@ public class EventDrawerFragment extends Fragment {
                             getActionBar().getThemedContext(),
                             android.R.layout.simple_list_item_activated_1,
                             android.R.id.text1,
-                            mEventList));
+                            mTitleList));
                 }
             });
+        }
+
+        @Override
+        public void handleEventParam(ArrayList<EventParam> paramList) {
+
         }
     };
 }

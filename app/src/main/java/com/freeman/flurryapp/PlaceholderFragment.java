@@ -13,8 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.freeman.flurryapp.adapter.DayValueListAdapter;
+import com.freeman.flurryapp.callback.RequestCallBack;
+import com.freeman.flurryapp.entry.EventParam;
+import com.freeman.flurryapp.entry.EventSummary;
+import com.freeman.flurryapp.entry.FlurryApplication;
 import com.freeman.flurryapp.entry.FlurryData;
 import com.freeman.flurryapp.manager.RequestManager;
+
+import java.util.ArrayList;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -74,7 +80,7 @@ public class PlaceholderFragment extends Fragment {
         RequestManager.getManager().setRequestCallBack(null);
     }
 
-    private RequestManager.RequestCallBack mCallBack = new RequestManager.RequestCallBack() {
+    private RequestCallBack mCallBack = new RequestCallBack() {
         @Override
         public void handleRequestData(final FlurryData data) {
             if(getActivity() != null) {
@@ -85,6 +91,21 @@ public class PlaceholderFragment extends Fragment {
                     }
                 });
             }
+        }
+
+        @Override
+        public void handleRequestApplications(ArrayList<FlurryApplication> data) {
+
+        }
+
+        @Override
+        public void handleEventSummary(ArrayList<EventSummary> summaryList) {
+
+        }
+
+        @Override
+        public void handleEventParam(ArrayList<EventParam> paramList) {
+
         }
     };
 }
