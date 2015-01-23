@@ -48,6 +48,7 @@ public class AppListActivity extends ActionBarActivity implements AppListAdapter
             createInputDlg();
         }else{
             RequestData.API_ACCESS_CODE = SettingManager.getStringSetting(AppListActivity.this,SettingManager.PREF_FLURRY,SettingManager.KEY_API_CODE,"");
+            RequestManager.getManager().requestApplications(mAppRequestCallback,RequestData.API_ACCESS_CODE);
         }
     }
 

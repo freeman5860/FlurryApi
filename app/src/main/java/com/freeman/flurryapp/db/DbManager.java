@@ -40,6 +40,7 @@ public class DbManager {
 
     public boolean updateAppList(ArrayList<FlurryApplication> data){
         HashSet<String> keySet = queryAppSet();
+        HashSet<String> newKeySet = new HashSet<>();
 
         SQLiteDatabase db = mAppDbHelper.getWritableDatabase();
 
@@ -62,6 +63,18 @@ public class DbManager {
                     values.put(AppEntry.COLUMN_NAME_VISIBLE, "1");
                     db.insert(AppEntry.TABLE_NAME, null, values);
                     Log.d(TAG,"insert app " + app.name);
+                }
+
+                newKeySet.add(app.apiKey);
+            }
+
+            for(String key : keySet){
+                if(!newKeySet.contains(key)){
+                    // 没了则删除
+                    String where = AppEntry.COLUMN_NAME_APIKEY + "=? ";
+                    String[] whereArgs = { key };
+
+                    db.delete(AppEntry.TABLE_NAME,where,whereArgs);
                 }
             }
 
